@@ -26,6 +26,10 @@
 #include <Kaleidoscope-LEDControl.h>
 #include <Kaleidoscope-LEDToggle.h>
 
+#include "Kaleidoscope-LEDEffect-Breathe.h"
+#include "Kaleidoscope-LEDEffect-Chase.h"
+#include "Kaleidoscope-LEDEffect-Rainbow.h"
+
 enum { QWERTY }; // layers
 
 // *INDENT-OFF*
@@ -53,8 +57,19 @@ KEYMAPS(
 // *INDENT-ON*
 
 void setup() {
-  Kaleidoscope.use(&LEDOff, &LEDToggle);
   Kaleidoscope.setup();
+
+  Kaleidoscope.use(
+    &LEDControl,
+    &LEDToggle,
+
+    &LEDOff,
+    &LEDBreatheEffect,
+    &LEDChaseEffect,
+    &LEDRainbowEffect
+  );
+
+  LEDOff.activate();
 }
 
 void loop() {

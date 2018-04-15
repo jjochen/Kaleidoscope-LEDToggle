@@ -24,12 +24,12 @@
 
 #include <Kaleidoscope-LEDToggle.h>
 #include <Kaleidoscope-LEDControl.h>
+#include "LED-Off.h"
 
 
 namespace kaleidoscope {
 
 LEDToggle::LEDToggle(void) {
-
 }
 
 void LEDToggle::begin(void) {
@@ -45,8 +45,59 @@ Key LEDToggle::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_
     return Key_NoKey;
   }
 
+  switch (mapped_key.raw) {
+  case LEDT_ON_OFF:
+    toggle();
+    break;
+  case LEDT_NEXT:
+    next();
+    break;
+  }
 
   return Key_NoKey;
+}
+
+
+int LEDToggle::lastLedModeIndex = -1;
+
+void LEDToggle::toggle() {
+  if (wasShiftKeyActive()) {
+    nextLedModeSkippingOff();
+  } else if (LEDControl::get_mode() != &::LEDOff) {
+    lastLedModeIndex = LEDControl::get_mode_index();
+    ::LEDOff.activate();
+  } else if (lastLedModeIndex >= 0) {
+    LEDControl::set_mode(lastLedModeIndex);
+  } else {
+    nextLedModeSkippingOff();
+  }
+}
+
+void LEDToggle::next() {
+  if (wasShiftKeyActive()) {
+    previousLedModeSkippingOff();
+  } else {
+    nextLedModeSkippingOff();
+  }
+}
+
+void LEDToggle::nextLedModeSkippingOff() {
+  do {
+    LEDControl::next_mode();
+  } while (LEDControl::get_mode() == &::LEDOff);
+  lastLedModeIndex = LEDControl::get_mode_index();
+}
+
+void LEDToggle::previousLedModeSkippingOff() {
+  do {
+    LEDControl::prev_mode();
+  } while (LEDControl::get_mode() == &::LEDOff);
+  lastLedModeIndex = LEDControl::get_mode_index();
+}
+
+bool LEDToggle::wasShiftKeyActive(void) {
+  return hid::wasModifierKeyActive(Key_LeftShift) ||
+         hid::wasModifierKeyActive(Key_RightShift);
 }
 
 }
