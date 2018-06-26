@@ -29,7 +29,7 @@ You're done!
 ## Adding the plugin to your sketch
 
 To activate the plugin, you need to include the header, tell Kaleidoscope to `use`
-the plugin, and place the `Key_LEDToggle` key in your keymap.
+the plugin, and place the `Key_LEDToggle` key in your key map.
 
 ### Setup operations in the firmware sketch (example):
 
@@ -37,10 +37,7 @@ the plugin, and place the `Key_LEDToggle` key in your keymap.
 #include <Kaleidoscope.h>
 #include <Kaleidoscope-LEDToggle.h>
 
-void setup (){
-  Kaleidoscope.use(&LEDOff, &LEDToggle);
-  Kaleidoscope.setup();
-}
+KALEIDOSCOPE_INIT_PLUGINS(LEDControl, LEDToggle, LEDOff);
 ```
 
 ## Dependencies

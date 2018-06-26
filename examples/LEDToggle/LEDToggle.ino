@@ -56,18 +56,11 @@ KEYMAPS(
 
 // *INDENT-ON*
 
+
+KALEIDOSCOPE_INIT_PLUGINS(LEDControl, LEDToggle, LEDOff, LEDBreatheEffect, LEDChaseEffect, LEDRainbowEffect);
+
 void setup() {
   Kaleidoscope.setup();
-
-  Kaleidoscope.use(
-    &LEDControl,
-    &LEDToggle,
-
-    &LEDOff,
-    &LEDBreatheEffect,
-    &LEDChaseEffect,
-    &LEDRainbowEffect
-  );
 
   LEDOff.activate();
 }

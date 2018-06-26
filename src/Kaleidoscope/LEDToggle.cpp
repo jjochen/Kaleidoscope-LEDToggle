@@ -26,23 +26,27 @@
 #include <Kaleidoscope-LEDControl.h>
 #include "LED-Off.h"
 
+namespace kaleidoscope {
+namespace {
+
+static int lastLedModeIndex = -1;
+static bool wasShiftKeyActive(void);
+static void nextLedModeSkippingOff();
+static void previousLedModeSkippingOff();
+
+} // namespace
+} // namespace kaleidoscope
+
 
 namespace kaleidoscope {
 
-LEDToggle::LEDToggle(void) {
-}
-
-void LEDToggle::begin(void) {
-  Kaleidoscope.useEventHandlerHook(eventHandlerHook);
-}
-
-Key LEDToggle::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state) {
+EventHandlerResult LEDToggle::onKeyswitchEvent(Key &mapped_key, byte row, byte col, uint8_t keyState) {
   if (mapped_key.raw < LEDT_FIRST || mapped_key.raw > LEDT_LAST) {
-    return mapped_key;
+    return EventHandlerResult::OK;
   }
 
-  if (!keyToggledOn(key_state)) {
-    return Key_NoKey;
+  if (!keyToggledOn(keyState)) {
+    return EventHandlerResult::EVENT_CONSUMED;
   }
 
   switch (mapped_key.raw) {
@@ -54,11 +58,8 @@ Key LEDToggle::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_
     break;
   }
 
-  return Key_NoKey;
+  return EventHandlerResult::EVENT_CONSUMED;
 }
-
-
-int LEDToggle::lastLedModeIndex = -1;
 
 void LEDToggle::toggle() {
   if (wasShiftKeyActive()) {
@@ -81,25 +82,30 @@ void LEDToggle::next() {
   }
 }
 
-void LEDToggle::nextLedModeSkippingOff() {
+
+namespace {
+
+void nextLedModeSkippingOff() {
   do {
     LEDControl::next_mode();
   } while (LEDControl::get_mode() == &::LEDOff);
   lastLedModeIndex = LEDControl::get_mode_index();
 }
 
-void LEDToggle::previousLedModeSkippingOff() {
+void previousLedModeSkippingOff() {
   do {
     LEDControl::prev_mode();
   } while (LEDControl::get_mode() == &::LEDOff);
   lastLedModeIndex = LEDControl::get_mode_index();
 }
 
-bool LEDToggle::wasShiftKeyActive(void) {
+bool wasShiftKeyActive(void) {
+  // todo: support one shot
   return hid::wasModifierKeyActive(Key_LeftShift) ||
          hid::wasModifierKeyActive(Key_RightShift);
 }
 
-}
+} // namespace
+} // namespace kaleidoscope
 
 kaleidoscope::LEDToggle LEDToggle;
