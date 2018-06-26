@@ -40,7 +40,7 @@ enum {
   LEDT_LAST = LEDT_NEXT
 };
 
-class LEDToggle : public KaleidoscopePlugin {
+class LEDToggle : public kaleidoscope::Plugin {
  public:
   LEDToggle(void) {};
   EventHandlerResult onKeyswitchEvent(Key &mapped_key, byte row, byte col, uint8_t keyState);
