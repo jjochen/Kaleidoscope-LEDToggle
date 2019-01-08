@@ -40,6 +40,8 @@ enum {
   LEDT_LAST = LEDT_NEXT
 };
 
+namespace plugin {
+
 class LEDToggle : public kaleidoscope::Plugin {
  public:
   LEDToggle(void) {};
@@ -48,6 +50,7 @@ class LEDToggle : public kaleidoscope::Plugin {
   static void next();
 };
 
-}
+} // plugin
+} // kaleidoscope
 
-extern kaleidoscope::LEDToggle LEDToggle;
+extern kaleidoscope::plugin::LEDToggle LEDToggle;

@@ -24,9 +24,9 @@
 
 #include <Kaleidoscope-LEDToggle.h>
 #include <Kaleidoscope-LEDControl.h>
-#include "LED-Off.h"
 
 namespace kaleidoscope {
+namespace plugin {
 namespace {
 
 static int lastLedModeIndex = -1;
@@ -35,10 +35,12 @@ static void nextLedModeSkippingOff();
 static void previousLedModeSkippingOff();
 
 } // namespace
+} // namespace plugin
 } // namespace kaleidoscope
 
 
 namespace kaleidoscope {
+namespace plugin {
 
 EventHandlerResult LEDToggle::onKeyswitchEvent(Key &mapped_key, byte row, byte col, uint8_t keyState) {
   if (mapped_key.raw < LEDT_FIRST || mapped_key.raw > LEDT_LAST) {
@@ -106,6 +108,7 @@ bool wasShiftKeyActive(void) {
 }
 
 } // namespace
+} // namespace plugin
 } // namespace kaleidoscope
 
-kaleidoscope::LEDToggle LEDToggle;
+kaleidoscope::plugin::LEDToggle LEDToggle;
