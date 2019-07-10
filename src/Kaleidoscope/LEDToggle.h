@@ -45,7 +45,7 @@ namespace plugin {
 class LEDToggle : public kaleidoscope::Plugin {
  public:
   LEDToggle(void) {};
-  EventHandlerResult onKeyswitchEvent(Key &mapped_key, byte row, byte col, uint8_t keyState);
+  EventHandlerResult onKeyswitchEvent(Key &mapped_key, KeyAddr key_addr, uint8_t keyState);
   static void toggle();
   static void next();
 };

@@ -42,7 +42,7 @@ static void previousLedModeSkippingOff();
 namespace kaleidoscope {
 namespace plugin {
 
-EventHandlerResult LEDToggle::onKeyswitchEvent(Key &mapped_key, byte row, byte col, uint8_t keyState) {
+EventHandlerResult LEDToggle::onKeyswitchEvent(Key &mapped_key, KeyAddr key_addr, uint8_t keyState) {
   if (mapped_key.raw < LEDT_FIRST || mapped_key.raw > LEDT_LAST) {
     return EventHandlerResult::OK;
   }
