@@ -29,7 +29,7 @@ You're done!
 ## Adding the plugin to your sketch
 
 To activate the plugin, you need to include the header, tell Kaleidoscope to `use`
-the plugin, and place the `Key_LEDToggle` key in your key map.
+the plugin, and place the `Key_LEDToggleOnOff` key in your key map.
 
 ### Setup operations in the firmware sketch (example):
 

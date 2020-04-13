@@ -43,7 +43,7 @@ namespace kaleidoscope {
 namespace plugin {
 
 EventHandlerResult LEDToggle::onKeyswitchEvent(Key &mapped_key, KeyAddr key_addr, uint8_t keyState) {
-  if (mapped_key.raw < LEDT_FIRST || mapped_key.raw > LEDT_LAST) {
+  if (mapped_key.getRaw() < LEDT_FIRST || mapped_key.getRaw() > LEDT_LAST) {
     return EventHandlerResult::OK;
   }
 
@@ -51,7 +51,7 @@ EventHandlerResult LEDToggle::onKeyswitchEvent(Key &mapped_key, KeyAddr key_addr
     return EventHandlerResult::EVENT_CONSUMED;
   }
 
-  switch (mapped_key.raw) {
+  switch (mapped_key.getRaw()) {
   case LEDT_ON_OFF:
     toggle();
     break;
@@ -103,8 +103,8 @@ void previousLedModeSkippingOff() {
 
 bool wasShiftKeyActive(void) {
   // todo: support one shot
-  return hid::wasModifierKeyActive(Key_LeftShift) ||
-         hid::wasModifierKeyActive(Key_RightShift);
+  return Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftShift) ||
+         Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_RightShift);
 }
 
 } // namespace

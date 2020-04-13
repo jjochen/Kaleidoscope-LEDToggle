@@ -27,8 +27,7 @@
 #include <Kaleidoscope.h>
 #include <Kaleidoscope-Ranges.h>
 
-#define Key_LEDToggle (Key){ .raw = kaleidoscope::LEDT_ON_OFF }
-#define Key_LEDToggleOnOff Key_LEDToggle
+#define Key_LEDToggleOnOff (Key){ .raw = kaleidoscope::LEDT_ON_OFF } 
 #define Key_LEDToggleNext (Key){ .raw = kaleidoscope::LEDT_NEXT }
 
 namespace kaleidoscope {
